@@ -6,93 +6,165 @@ import BioData from './components/BioData'
 
 
 function App() {
-	const [noteTitle, setNoteTitle] = useState("")
-	const [notes, setNotes] = useState([
-		// {id:1, title: "ntoe 1"},
-		// {id:2, title: "ntoe 2"},
-		// {id:3, title: "ntoe 3"},
+	const [studentName, setStudentName] = useState("");
+	const [students, setStudents] = useState([
+		{id: 1, name: "Rudro", isPresent: undefined},
+		{id: 2, name: "Niloy", isPresent: false},
+		{id: 3, name: "Maruf", isPresent: true},
 	])
 	const [editMode, setEditMode] = useState(false);
-	const [editableNote, setEditableNote] = useState(null);
+	const [editableStudent, setEditableStudent] = useState(null);
 
 	const submitHandler = (event) => {
 		event.preventDefault();
-
-		if(noteTitle.trim() === "") return alert("Please enter valid note");
+		if(studentName.trim()==="") return alert("Please provide a valid student name.");
 
 		editMode ? updateHandler() : createHandler();
-	}
+	};
 
 	const createHandler = () => {
-		const newNote = {
-			id: Date.now(),
-			title: noteTitle
+		const newStudent = {
+			id: Date.now() + "",
+			name: studentName,
+			isPresent: undefined,
 		}
 
-		setNotes([...notes, newNote])
-		setNoteTitle("")
-	}
+		setStudents([...students, newStudent]);
+	};
 
-	const removeHandler = (noteId) => {
-		const updatedNotes = notes.filter((note) => note.id !== noteId)
-
-		setNotes(updatedNotes)
-	}
-
-	const editHandler = (note) => {
-		setEditMode(true)
-		setNoteTitle(note.title)
-		setEditableNote(note)
-	}
+	const editHandler = (student) => {
+		setEditMode(true);
+		setStudentName(student.name);
+		setEditableStudent(student);
+	};
 
 	const updateHandler = () => {
-		const updatednoteList = notes.map((note) => {
-			if(note.id === editableNote.id){
-				return {...note, title: noteTitle}
+		const updatedStudents = students.map((student) => {
+			if(editableStudent.id===student.id){
+				return {...student, name: studentName};
 			}
-			return note
+			return student
 		})
 
-		setNotes(updatednoteList)
-		setNoteTitle("")
-		setEditMode(false)
-		setEditableNote(null)
-	}
+		setStudents(updatedStudents);
+		setStudentName("");
+		setEditMode(false);
+		setEditableStudent(null);
+	};
 
-	// const changeTitleHandler = (event) => {
-	// 	console.log(event.target)
-	// 	setNoteTitle(event.target.value)
-	// }
+	const removeHandler = (student) => {
+		const updatedStudents = students.filter((item) => item.id !== student.id)
+		setStudents(updatedStudents);
+	};
+
+	const sendToPresentList = (student) => {
+		if(student.isPresent !== undefined){
+			return alert(`This student is already in the ${student.isPresent===true ? "Present List" : "Absent List"}`);
+		}
+
+		const updatedStudents = students.map((item) => {
+			if(student.id === item.id){
+				return {...item, isPresent:true};
+			}
+			return item;
+		})
+
+		setStudents(updatedStudents);
+	};
+
+	const sendToAbsentList = (student) => {
+		if(student.isPresent !== undefined){
+			return alert(`This student is already in the ${student.isPresent===true ? "Present List" : "Absent List"}`);
+		}
+
+		const updatedStudents = students.map((item) => {
+			if(student.id === item.id){
+				return {...item, isPresent:false};
+			}
+			return item;
+		})
+
+		setStudents(updatedStudents);
+	};
+	
+	const toggleHandler = (student) => {
+		const updatedStudents = students.map((item) => {
+			if(student.id === item.id) {
+				return {...item, isPresent: !item.isPresent};
+			}
+			return item;
+		})
+
+		setStudents(updatedStudents);
+	}
 
 	return(
 		<div className="App">
-			<form className={editMode ? "form":""} onSubmit={submitHandler}>
+			<form onSubmit={submitHandler}>
 				<input
 					type="text"
-					value={noteTitle}
-					onChange={(event) => {
-						// console.log(event.target)
-						setNoteTitle(event.target.value)
+					value={studentName}
+					onChange={(e) => {
+						setStudentName(e.target.value);
 					}}
 				/>
 				<button type="submit">
-					{editMode ? "Update note" : "Add note"}
+					{editMode ? "Update student" : "Add student"};
 				</button>
 			</form>
 
-			<ul>
-				{notes.map((note) => (
-					<li>
-						<span>{note.title}</span>
-						<button onClick={() => editHandler(note)}>
-							Edit
-						</button>
-						<button onClick={() => removeHandler(note.id)}>
-							Delete
-						</button>
-					</li>
-				))}
-			</ul>
+			<div className="student-section">
+				<div className="all-student">
+					<h2>All Student</h2>
+					<ul className='list'>
+						{students.map((student) => (
+							<li className='list-item' key={student.id}>
+								<span>{student.name}</span>
+								<button onClick={() => editHandler(student)}>
+									Edit
+								</button>
+								<button onClick={() => removeHandler(student)}>
+									Delete
+								</button>
+								<button onClick={() => sendToPresentList(student)}>
+									Send to present list
+								</button>
+								<button onClick={() => sendToAbsentList(student)}>
+									Send to absent list
+								</button>
+							</li>
+						))}
+					</ul>
+				</div>
+
+				<div className="present-student">
+					<h2>Present Student</h2>
+					<ul className='list'>
+						{students.filter((student)=> student.isPresent===true).map((student) => (
+							<li className='list-item' key={student.id}>
+								<span>{student.name}</span>
+								<button onClick={() => toggleHandler(student)}>
+									Accidentally added
+								</button>
+							</li>
+						))}
+					</ul>
+				</div>
+
+				<div className="absent-student">
+					<h2>Absent Student</h2>
+					<ul className='list'>
+						{students.filter((student)=> student.isPresent===false).map((student) => (
+							<li className='list-item' key={student.id}>
+								<span>{student.name}</span>
+								<button onClick={() => toggleHandler(student)}>
+									Accidentally added
+								</button>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
 		</div>
 	)
 }
