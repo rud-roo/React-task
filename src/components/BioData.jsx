@@ -12,6 +12,7 @@
 
 // BioData(param);
 
+
 const BioData = (props) => {
   // console.log("props:", props);
   const {name, age, email, skills, interests, socialLinks} = props;
