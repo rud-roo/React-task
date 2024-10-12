@@ -7,25 +7,57 @@ import './App.css'
 
 
 function App() {
-  // let counter = 0;
-  const [dynamicCounter, setDynamicCounter] = useState(0);
+  const [noteTitle, setNoteTitle] = useState("")
+  const [notes, setNotes] = useState([
+    {id:1, title: "Note 1"},
+    {id:2, title: "Note 2"},
+    {id:3, title: "Note 3"},
+  ])
 
-  const increaseHandler = () => {
-    // counter++;
-    // console.log("counter:", counter);
-    setDynamicCounter(dynamicCounter+1);
-  };
+  // const changeTitleHandler = (event) => {
+  //   console.log(event.target.value)
+  //   setNoteTitle(event.target.value);
+  // }
 
-  const decreaseHandler = () => {
-    // counter--;
-    setDynamicCounter(dynamicCounter-1)
-  };
+  const submitHandler = (event)=>{
+    event.preventDefault();
+    if (noteTitle.trim()==="") return alert("Please enter a valid title");
+    const newNote = {
+      id: Date.now() + "",
+      title: noteTitle
+    }
+    setNotes([...notes, newNote]);
+    setNoteTitle("")
+  }
+
+  const removeHandler = (noteId)=>{
+    const updatedNotes = notes.filter((note) => note.id !== noteId);
+
+    setNotes(updatedNotes);
+  }
 
   return (
     <div className="App">
-      <p>The value of the counter is {dynamicCounter}</p>
-      <button onClick={increaseHandler}>Increase by 1</button>
-      <button onClick={decreaseHandler}>Decrease by 1</button>
+      <form onSubmit={submitHandler}>
+        <input 
+          type="text"
+          value={noteTitle}
+          onChange={(event)=>{
+            setNoteTitle(event.target.value);
+          }}
+        />
+        <button type="submit">Add note</button>
+      </form>
+
+      <ul>
+        {notes.map((note)=>(
+          <li className='note-title' key={note.id}>
+            <span>{note.title}</span>
+            <button>Edit</button>
+            <button onClick={()=>removeHandler(note.id)}>Delete</button>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
