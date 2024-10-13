@@ -7,12 +7,14 @@ import './App.css'
 
 
 function App() {
-  const [noteTitle, setNoteTitle] = useState("")
+  const [noteTitle, setNoteTitle] = useState("");
   const [notes, setNotes] = useState([
-    {id:1, title: "Note 1"},
-    {id:2, title: "Note 2"},
-    {id:3, title: "Note 3"},
-  ])
+    // {id:1, title: "Note 1"},
+    // {id:2, title: "Note 2"},
+    // {id:3, title: "Note 3"},
+  ]);
+  const [editMode, setEditMode] = useState(false);
+  const [editableNote, setEditableNote] = useState(null);
 
   // const changeTitleHandler = (event) => {
   //   console.log(event.target.value)
@@ -22,6 +24,10 @@ function App() {
   const submitHandler = (event)=>{
     event.preventDefault();
     if (noteTitle.trim()==="") return alert("Please enter a valid title");
+    editMode ? updateHandler() : createHandler();
+  }
+
+  const createHandler = () => {
     const newNote = {
       id: Date.now() + "",
       title: noteTitle
@@ -36,6 +42,26 @@ function App() {
     setNotes(updatedNotes);
   }
 
+  const editHandler = (note) => {
+    setEditMode(true);
+    setNoteTitle(note.title);
+    setEditableNote(note);
+  }
+
+  const updateHandler = () => {
+    const updatedNoteList = notes.map((note) => {
+      if(note.id === editableNote.id){
+        return {...note, title: noteTitle};
+      }
+      return note;
+    })
+
+    setNotes(updatedNoteList);
+    setNoteTitle("");
+    setEditMode(false);
+    setEditableNote(null);
+  }
+
   return (
     <div className="App">
       <form onSubmit={submitHandler}>
@@ -46,14 +72,16 @@ function App() {
             setNoteTitle(event.target.value);
           }}
         />
-        <button type="submit">Add note</button>
+        <button type="submit">
+          {editMode ? "Update note" : "Add note"}
+        </button>
       </form>
 
       <ul>
         {notes.map((note)=>(
           <li className='note-title' key={note.id}>
             <span>{note.title}</span>
-            <button>Edit</button>
+            <button onClick={()=>editHandler(note)}>Edit</button>
             <button onClick={()=>removeHandler(note.id)}>Delete</button>
           </li>
         ))}
