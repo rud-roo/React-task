@@ -1,7 +1,25 @@
 .App{
-    text-align: center;
+  text-align: center;
 }
 
 .note-item{
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form {
+  margin-bottom: 15px;
+}
+
+.student-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.list{
+  border: 1px solid red;
+  border-radius: 5px;
+}
+
+.list-item{
+  margin-bottom: 15px;
 }
