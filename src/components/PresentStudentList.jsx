@@ -7,7 +7,7 @@ const PresentStudentList = (props) => {
   );
 
   return (
-    <div className="present-list">
+    <div className="list present-list">
         <h2>Present Students</h2>
         <ul>
         {presentList.map((student) => (

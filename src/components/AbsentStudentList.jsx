@@ -7,7 +7,7 @@ const AbsentStudentList = (props) => {
   );
 
   return (
-    <div className="absent-list">
+    <div className="list absent-list">
         <h2>Absent Students</h2>
         <ul>
         {absentList.map((student) => (

@@ -63,7 +63,7 @@ const AllStudentList = (props) => {
 
 
   return (
-    <div className="all-list">
+    <div className="list all-list">
         <h2>All Students</h2>
         <ul>
         {students.map((student)=>(
