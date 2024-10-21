@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { StudentContext } from './contexts/Student';
 
-const PresentStudentList = (props) => {
+const PresentStudentList = () => {
 
-  const presentList = props.students.filter(
+  const {students, toggleList} = useContext(StudentContext);
+
+  const presentList = students.filter(
     (student) => student.isPresent===true
   );
 
@@ -13,7 +16,7 @@ const PresentStudentList = (props) => {
         {presentList.map((student) => (
             <li className="list-item">
             <span>{student.name}</span>
-            <button onClick={()=>props.toggleList(student.id)}>Accidentaly Added</button>
+            <button onClick={()=>toggleList(student.id)}>Accidentaly Added</button>
             </li>
         ))}
         </ul>

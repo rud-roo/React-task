@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { StudentContext } from './contexts/Student';
 
-const AbsentStudentList = (props) => {
+const AbsentStudentList = () => {
 
-  const absentList = props.students.filter(
+  const {students, toggleList} = useContext(StudentContext);
+
+  const absentList = students.filter(
     (student) => student.isPresent===false
   );
 
@@ -13,7 +16,7 @@ const AbsentStudentList = (props) => {
         {absentList.map((student) => (
             <li className="list-item">
             <span>{student.name}</span>
-            <button onClick={()=>props.toggleList(student.id)}>Accidentaly Added</button>
+            <button onClick={()=>toggleList(student.id)}>Accidentaly Added</button>
             </li>
         ))}
         </ul>
