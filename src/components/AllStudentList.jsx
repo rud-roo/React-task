@@ -1,65 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { StudentContext } from './contexts/Student';
 
-const AllStudentList = (props) => {
+const AllStudentList = () => {
 
   const {
     students,
-    setStudents,
-    setStudentName,
-    setEditMode,
-    setEditableStudent,
-  } = props;
+    editHandler,
+    removeHandler,
+    sendToPresentList,
+    sendToAbsentList
+  } = useContext(StudentContext);
 
-  const editHandler = (student) => {
-    setEditMode(true);
-    setStudentName(student.name);
-    setEditableStudent(student);
-  }
 
-  const removeHandler = (studentId) => {
-    const updatedStudentList = students.filter(
-      (student) => student.id !== studentId
-    )
-    setStudents(updatedStudentList);
-  }
-
-  const sendToPresentList = (student) => {
-    if(student.isPresent!==undefined){
-      return alert(
-        `The student is already in the ${
-          student.isPresent ? "Present list" : "Absent list"
-        }`
-      )
-    }
-
-    const updatedStudentList = students.map((item) => {
-      if(item.id === student.id){
-        return {...item, isPresent: true};
-      }
-      return item;
-    })
-
-    setStudents(updatedStudentList);
-  }
-
-  const sendToAbsentList = (student) => {
-    if(student.isPresent!==undefined){
-      return alert(
-        `The student is already in the ${
-          student.isPresent ? "Present list" : "Absent list"
-        }`
-      )
-    }
-
-    const updatedStudentList = students.map((item) => {
-      if(item.id === student.id){
-        return {...item, isPresent: false};
-      }
-      return item;
-    })
-
-    setStudents(updatedStudentList);
-  }
 
 
   return (

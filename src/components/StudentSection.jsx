@@ -1,48 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import AllStudentList from './AllStudentList'
 import PresentStudentList from './PresentStudentList'
 import AbsentStudentList from './AbsentStudentList'
+import { StudentContext } from './contexts/Student'
 
-const StudentSection = (props) => {
-  const {
-    students,
-    setStudents,
-    setStudentName,
-    setEditMode,
-    setEditableStudent,
-  } = props;
-
-  const toggleList = (studentId) => {
-    const updatedStudentList = students.map((student) => {
-      if(student.id === studentId){
-        return {...student, isPresent: !student.isPresent};
-      }
-      return student;
-    })
-
-    setStudents(updatedStudentList);
-  }
+const StudentSection = () => {
 
 
   return (
     <div className="student-section">
-      <AllStudentList
-        students = {students}
-        setStudents = {setStudents}
-        setStudentName = {setStudentName}
-        setEditMode = {setEditMode}
-        setEditableStudent = {setEditableStudent}
-      />
+      <AllStudentList/>
 
-      <PresentStudentList
-        students = {students}
-        toggleList = {toggleList}
-      />
+      <PresentStudentList/>
 
-      <AbsentStudentList
-        students = {students}
-        toggleList = {toggleList}
-      />
+      <AbsentStudentList/>
     </div>
   )
 }
