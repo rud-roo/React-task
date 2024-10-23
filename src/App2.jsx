@@ -33,6 +33,13 @@ const themeRedeucer = (state, action) => {
 const App2 = () => {
     const [counter, dispatchCounterAction] = useReducer(counterReducer, 0);
     const [theme, dispatchThemeAction] = useReducer(themeRedeucer, initStateOfTheme);
+
+    const increaseCounter = (value) => {
+        dispatchCounterAction({
+            type: "ADD",
+            value: value,
+        })
+    }
   return (
     <div 
         style={{
@@ -42,8 +49,9 @@ const App2 = () => {
     >
         <div className="counter-app">
             <p>The value of the counter is {counter}</p>
-            <button onClick={()=>dispatchCounterAction({type:"ADD", value: 1})}>increase by 1</button>
+            <button onClick={()=>increaseCounter(1)}>increase by 1</button>
             <button onClick={()=>dispatchCounterAction({type:"DEDUCT", value:1})}>decrease by 1</button>
+            <button onClick={()=>dispatchCounterAction({type:"ADD", value:10})}>increase by 10</button>
         </div>
         
         <hr />
