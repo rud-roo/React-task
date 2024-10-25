@@ -1,11 +1,39 @@
-import React, { useContext } from 'react'
-import { StudentContext } from './contexts/Student';
+import { useContext } from "react";
+import { StudentContext } from "./contexts/Student";
 
 const AbsentStudentList = () => {
+	const { studentStates, dispatchStudentAction } = useContext(StudentContext);
+	return (
+		<div className="list absent-list">
+			<h2>Absent Students</h2>
+			{studentStates.students
+				.filter((student) => student.isPresent === false)
+				.map((student) => (
+					<li className="list-item" key={student.id}>
+						<span>{student.name}</span>
+						<button
+							onClick={() =>
+								dispatchStudentAction({
+									type: "UPDATE_PRESENT_STATUS",
+									payload: {
+										id: student.id,
+										isPresent: !student.isPresent,
+									},
+								})
+							}
+						>
+							Accidentally Added
+						</button>
+					</li>
+				))}
+		</div>
+	);
+};
 
-  const {students, toggleList} = useContext(StudentContext);
+<<<<<<< Updated upstream
+  const {studentStates, dispatchStudentAction,} = useContext(StudentContext);
 
-  const absentList = students.filter(
+  const absentList = studentStates.students.filter(
     (student) => student.isPresent===false
   );
 
@@ -16,7 +44,19 @@ const AbsentStudentList = () => {
         {absentList.map((student) => (
             <li className="list-item">
             <span>{student.name}</span>
-            <button onClick={()=>toggleList(student.id)}>Accidentaly Added</button>
+            <button 
+              onClick={()=>
+                dispatchStudentAction({
+                  type: "UPDATE_PRESENT_STATUS",
+                  payload: {
+                    id: student.id,
+                    isPresent: !student.isPresent,
+                  },
+                })
+              }
+            >
+              Accidentaly Added
+            </button>
             </li>
         ))}
         </ul>
@@ -25,3 +65,6 @@ const AbsentStudentList = () => {
 }
 
 export default AbsentStudentList
+=======
+export default AbsentStudentList;
+>>>>>>> Stashed changes
