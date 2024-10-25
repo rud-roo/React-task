@@ -3,9 +3,9 @@ import { StudentContext } from './contexts/Student';
 
 const AbsentStudentList = () => {
 
-  const {students, toggleList} = useContext(StudentContext);
+  const {studentStates, dispatchStudentAction,} = useContext(StudentContext);
 
-  const absentList = students.filter(
+  const absentList = studentStates.students.filter(
     (student) => student.isPresent===false
   );
 
@@ -16,7 +16,19 @@ const AbsentStudentList = () => {
         {absentList.map((student) => (
             <li className="list-item">
             <span>{student.name}</span>
-            <button onClick={()=>toggleList(student.id)}>Accidentaly Added</button>
+            <button 
+              onClick={()=>
+                dispatchStudentAction({
+                  type: "UPDATE_PRESENT_STATUS",
+                  payload: {
+                    id: student.id,
+                    isPresent: !student.isPresent,
+                  },
+                })
+              }
+            >
+              Accidentaly Added
+            </button>
             </li>
         ))}
         </ul>

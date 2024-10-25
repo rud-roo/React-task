@@ -4,10 +4,9 @@ import { StudentContext } from './contexts/Student';
 
 const StudentForm = () => {
   const {
-    studentName,
-    setStudentName,
-    editMode,
-    submitHandler
+    studentStates,
+    dispatchStudentAction,
+    submitHandler,
   } = useContext(StudentContext);
 
 
@@ -16,11 +15,14 @@ const StudentForm = () => {
     <form  className="form" onSubmit={submitHandler}>
       <input 
           type="text" 
-          value={studentName} 
-          onChange={(e)=>setStudentName(e.target.value)}
+          value={studentStates.studentName} 
+          onChange={(e)=>dispatchStudentAction({
+            type: "CHANGE_STUDENT_NAME",
+            payload: e.target.value,
+          })}
       />
       <button type="submit">
-          {editMode ? "Update student" : "Add student"}
+          {studentStates.editMode ? "Update student" : "Add student"}
       </button>
     </form>
   )
