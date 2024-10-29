@@ -1,0 +1,34 @@
+{
+  "notes": [
+    {
+      "id": "1716047641930",
+      "title": "another note"
+    },
+    {
+      "id": "1716047781365",
+      "title": "note 100"
+    },
+    {
+      "id": "1730146868735",
+      "title": "askjfl"
+    },
+    {
+      "id": "1730147618423",
+      "title": "dfghrt"
+    },
+    {
+      "id": "1730194781369",
+      "title": "ryufgh tyrty"
+    }
+  ],
+  "students": [
+    {
+      "id": "456",
+      "name": "Salman vai"
+    },
+    {
+      "id": "452",
+      "name": "Mridul vai"
+    }
+  ]
+}
