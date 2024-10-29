@@ -2,60 +2,127 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import StudentForm from './components/StudentForm';
-import StudentSection from './components/StudentSection';
+
 
 
 
 function App() {
-  const [posts, setPosts] = useState([]);
-  const [counter, setCounter] = useState(1);
-  const [counter2, setCounter2] = useState(1);
+  const [noteTitle, setNoteTitle] = useState("");
+  const [notes, setNotes] = useState([
+    // {id:1, title: "Note 1"},
+    // {id:2, title: "Note 2"},
+    // {id:3, title: "Note 3"},
+  ]);
+  const [editMode, setEditMode] = useState(false);
+  const [editableNote, setEditableNote] = useState(null);
+
+  const getAllNotes = () => {
+    fetch(`http://localhost:3000/notes`)
+      .then((res) => res.json())
+      .then((data) => {
+        setNotes(data);
+      });
+  };
 
   useEffect(() => {
-    fetch(`https://jsonplaceholder.typicode.com/posts?_limit=5`)
-      .then((res) => res.json())
-      .then((data)=>{
-        setPosts(data)
-        // console.log("inside")
-      })
-  },[]);
+    getAllNotes();
+  }, []);
+
+  const submitHandler = (event)=>{
+    event.preventDefault();
+    if (noteTitle.trim()==="") return alert("Please enter a valid title");
+    editMode ? updateHandler() : createHandler();
+  }
+
+  const createHandler = () => {
+    const newNote = {
+      id: Date.now() + "",
+      title: noteTitle
+    }
     
-    // console.log("outside")
+    fetch(`http://localhost:3000/notes`, {
+      method: "POST",
+      body: JSON.stringify(newNote),
+      headers: {
+        "Content-type": "application/json",
+      }
+    }).then(() => {
+      getAllNotes();
+    })
+    setNoteTitle("")
+  }
+
+  const removeHandler = (noteId)=>{
+    // const updatedNotes = notes.filter((note) => note.id !== noteId);
+
+    // setNotes(updatedNotes);
+
+    fetch(`http://localhost:3000/notes/${noteId}`, {
+      method: "DELETE",
+    }).then(() => {
+      getAllNotes()
+    })
+  }
+
+  const editHandler = (note) => {
+    setEditMode(true);
+    setNoteTitle(note.title);
+    setEditableNote(note);
+  }
+
+  const updateHandler = () => {
+    // const updatedNoteList = notes.map((note) => {
+    //   if(note.id === editableNote.id){
+    //     return {...note, title: noteTitle};
+    //   }
+    //   return note;
+    // })
+
+    const updatedNote = {
+      ...editableNote,
+      title: noteTitle,
+    }
+
+    fetch(`http://localhost:3000/notes/${editableNote.id}`, {
+      method: "PUT",
+      body: JSON.stringify(updatedNote),
+      headers: {
+        "Content-type": "application/json"
+      }
+    }).then(() => {
+      getAllNotes()
+    })
+
+    // setNotes(updatedNoteList);
+    setNoteTitle("");
+    setEditMode(false);
+    setEditableNote(null);
+  }
 
   return (
     <div className="App">
-      {/* <StudentForm/>
-      <StudentSection/> */}
-
-      <div className="counterApp">
-        <h1>the value of the counter is {counter}</h1>
-        <button onClick={()=>setCounter(counter+1)}>
-          Increase by 1
+      <form onSubmit={submitHandler}>
+        <input 
+          type="text"
+          value={noteTitle}
+          onChange={(event)=>{
+            setNoteTitle(event.target.value);
+          }}
+        />
+        <button type="submit">
+          {editMode ? "Update note" : "Add note"}
         </button>
-        <button onClick={()=>setCounter(counter-1)}>
-          Decrease by 1
-        </button>
-      </div>
-
-      <hr />
-
-      <div className="counterApp2">
-        <h1>the value of the counter is {counter2}</h1>
-        <button onClick={()=>setCounter2(counter2+1)}>
-          Increase by 1
-        </button>
-        <button onClick={()=>setCounter2(counter2-1)}>
-          Decrease by 1
-        </button>
-      </div>
+      </form>
 
       <ul>
-        {posts.map((post)=>(
-          <li key={post}>{post.title}</li>
+        {notes.map((note)=>(
+          <li className='note-title' key={note.id}>
+            <span>{note.title}</span>
+            <button onClick={()=>editHandler(note)}>Edit</button>
+            <button onClick={()=>removeHandler(note.id)}>Delete</button>
+          </li>
         ))}
       </ul>
-
     </div>
   )
 }
