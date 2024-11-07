@@ -1,5 +1,8 @@
+import { useContext } from "react";
+import { CartContext } from "../contexts/Cart";
 
 const ProductCard = ({ product }) => {
+  const {dispatch} = useContext(CartContext)
 
 	return (
 		<div className="ingredient">
@@ -17,7 +20,16 @@ const ProductCard = ({ product }) => {
 				</p>
 			</div>
 			<div className="ingredient__btn">
-				<button className="btn-white">
+				<button
+					className="btn-white"
+          onClick={() => {
+            dispatch({
+              type: "ADD_TO_CART",
+              payload: product,
+            })
+            alert(`${product.title} added to cart.`)
+          }}
+        >
 					ADD TO CART
 				</button>
 			</div>

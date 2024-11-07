@@ -1,6 +1,11 @@
+import { useContext } from "react";
+import { CartContext } from "../contexts/Cart";
+import CartItem from "../components/CartItem";
 
 const Cart = () => {
-
+  const {cart, dispatch} = useContext(CartContext);
+  let totalPrice = 0;
+	cart.forEach((item) => (totalPrice += item.quantity * item.price));
 
 	return (
 		<>
@@ -21,7 +26,9 @@ const Cart = () => {
 							</tr>
 						</thead>
 						<tbody>
-							
+							{cart.map((item) => (
+                <CartItem item={item} key={item.id} />
+              ))}
 						</tbody>
 					</table>
 				</div>
@@ -32,6 +39,7 @@ const Cart = () => {
 					<button
 						type="button"
 						className="btn-big"
+            onClick={() => dispatch({type: "CLEAR_CART"})}
 					>
 						Clear Cart
 					</button>

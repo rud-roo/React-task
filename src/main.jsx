@@ -4,9 +4,12 @@ import App from './App.jsx'
 import './index.css'
 import { RouterProvider } from 'react-router-dom'
 import { rootRouter } from './router/router.jsx'
+import CartProvider from './contexts/Cart.jsx'
 
 const root =ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
-  <RouterProvider router={rootRouter} />
+  <CartProvider>
+    <RouterProvider router={rootRouter} />
+  </CartProvider>
 )
