@@ -12,6 +12,7 @@ const Shop = () => {
 	}, []);
 	return (
 		<div>
+			{/* banner section */}
 			<div className="page-banner">
 				<div className="page-banner__details">
 					<div className="page-banner__details__title">
