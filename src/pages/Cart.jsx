@@ -1,9 +1,9 @@
-import { useContext } from "react";
-import { CartContext } from "../contexts/Cart";
+import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../components/CartItem";
 
 const Cart = () => {
-  const {cart, dispatch} = useContext(CartContext);
+  const cart = useSelector((storeState) => storeState.cart)
+	const dispatch = useDispatch()
   let totalPrice = 0;
 	cart.forEach((item) => (totalPrice += item.quantity * item.price));
 
@@ -33,7 +33,7 @@ const Cart = () => {
 					</table>
 				</div>
 				<h2 className="total-price">
-					You Total Price Will be 
+					You Total Price Will be {totalPrice}
 				</h2>
 				<div className="mt-50">
 					<button
