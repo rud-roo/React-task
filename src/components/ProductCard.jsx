@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { CartContext } from "../contexts/Cart";
+import { useDispatch } from "react-redux";
 
 const ProductCard = ({ product }) => {
-  const {dispatch} = useContext(CartContext)
+  const dispatch = useDispatch()
 
 	return (
 		<div className="ingredient">
