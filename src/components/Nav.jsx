@@ -12,6 +12,15 @@ function Nav() {
 						<li>
 							<Link to="/cart">Cart</Link>
 						</li>
+						<li>
+							<Link to="/posts">Post List</Link>
+						</li>
+						<li>
+							<Link to="/users">User List</Link>
+						</li>
+						<li>
+							<Link to="/counter-app">Counter App</Link>
+						</li>
 					</ul>
 				</nav>
 			</div>
