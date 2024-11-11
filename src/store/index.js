@@ -1,11 +1,17 @@
-import { createStore, combineReducers } from 'redux'
+// import { createStore, combineReducers } from 'redux'
+// import { counterReducer } from './reducer/counter';
+// import { cartReducer } from './reducer/cart';
+// import { composeWithDevTools } from '@redux-devtools/extension';
+
+import { configureStore } from "@reduxjs/toolkit";
 import { counterReducer } from './reducer/counter';
-import { cartReducer } from './reducer/cart';
-import { composeWithDevTools } from '@redux-devtools/extension';
+import cartSlice from "./reducer/cart";
 
-const rootReducer = combineReducers({
+const rootReducer = {
   counter: counterReducer,
-  cart: cartReducer
-})
+  cart: cartSlice.reducer,
+}
 
-export const store = createStore(rootReducer, composeWithDevTools());
+export const store = configureStore({
+  reducer: rootReducer
+});
