@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { addToCart } from '../store/action-creator/cart.js'
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch()
@@ -22,10 +23,7 @@ const ProductCard = ({ product }) => {
 				<button
 					className="btn-white"
           onClick={() => {
-            dispatch({
-              type: "ADD_TO_CART",
-              payload: product,
-            })
+            dispatch(addToCart(product)),
             alert(`${product.title} added to cart.`)
           }}
         >

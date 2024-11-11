@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { modifyQuantityOfAnItem, removeAnItemFromCart } from '../store/action-creator/cart.js'
 
 
 function CartItem({ item }) {
 	const [itemQuantity, setItemQuantity] = useState(item.quantity);
-  const dispatch = useDispatch()
+	const dispatch = useDispatch()
 
 
 	return (
@@ -28,21 +29,18 @@ function CartItem({ item }) {
 						className="qty-count qty-count--minus"
 						data-action="minus"
 						type="button"
-						onClick={()=>{
-              if(itemQuantity>1){
-                dispatch({
-                  type: "MODIFY_QUANTITY_OF_AN_ITEM",
-                  payload: {
-                    id: item.id,
-                    quantity: itemQuantity-1
-                  }
-                })
-                setItemQuantity(itemQuantity-1);
-              }
-              else {
+						onClick={() => {
+							if (itemQuantity > 1) {
+								dispatch(modifyQuantityOfAnItem({
+									id: item.id,
+									quantity: itemQuantity - 1,
+								}))
+								setItemQuantity(itemQuantity - 1);
+							}
+							else {
 								alert(`Quantity should not be less than 1`);
 							}
-            }}
+						}}
 					>
 						<figure>
 							-
@@ -54,15 +52,12 @@ function CartItem({ item }) {
 						name="product-qty"
 						value={itemQuantity}
 						onChange={(event) => {
-              dispatch({
-								type: "MODIFY_QUANTITY_OF_AN_ITEM",
-								payload: {
-									id: item.id,
-									quantity: Number(event.target.value),
-								},
-							});
+							dispatch(modifyQuantityOfAnItem({
+								id: item.id,
+								quantity: Number(event.target.value),
+							}));
 							setItemQuantity(Number(event.target.value));
-            }}
+						}}
 						min="1"
 					/>
 					<button
@@ -70,15 +65,12 @@ function CartItem({ item }) {
 						data-action="add"
 						type="button"
 						onClick={() => {
-              dispatch({
-								type: "MODIFY_QUANTITY_OF_AN_ITEM",
-								payload: {
-									id: item.id,
-									quantity: itemQuantity + 1,
-								},
-							});
+							dispatch(modifyQuantityOfAnItem({
+								id: item.id,
+								quantity: itemQuantity + 1,
+							}));
 							setItemQuantity(itemQuantity + 1);
-            }}
+						}}
 					>
 						<figure>
 							+
@@ -89,15 +81,12 @@ function CartItem({ item }) {
 			<td>$ {item.price * item.quantity}</td>
 			<td>
 				<button
-          onClick={() => {
-            dispatch({
-              type: "REMOVE_ITEM_FROM_CART",
-              payload: item.id,
-            })
-          }}
-        >
-          x
-        </button>
+					onClick={() => {
+						dispatch(removeAnItemFromCart(item.id))
+					}}
+				>
+					x
+				</button>
 			</td>
 		</tr>
 	);
