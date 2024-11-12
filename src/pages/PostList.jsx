@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { useFetch } from '../hooks/useFetch';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts } from '../store/api-services/post';
+
 
 const PostList = () => {
-  const {data: posts,
-    isLoading, 
-    errorMessage
-  } = useFetch([], `https://jsonplaceholder.typicode.com/posts?_limit=5`)
+  const { posts, isLoading, errorMessage } = useSelector(
+		(storeState) => storeState.post,
+	);
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchPosts);
+	}, []);
   
   return (
     <div>
