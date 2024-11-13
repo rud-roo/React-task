@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../store/reducer/product";
 
 const Shop = () => {
-	const [products, setProducts] = useState([]);
+	const {isLoading, errorMessage, products} = useSelector(
+		(storeState) => storeState.products
+	);
+	const dispatch = useDispatch();
 	useEffect(() => {
-		fetch(`http://localhost:3000/products`)
-			.then((res) => res.json())
-			.then((data) => {
-				setProducts(data)
-			})
+		dispatch(fetchProducts());
 	}, []);
 	return (
 		<div>
