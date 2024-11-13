@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
-import ProductCard from "../components/ProductCard";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../store/reducer/product";
+import { useGetAllProductsQuery } from "../store/features/apiSlice";
+import ProductCard from "../components/ProductCard"
 
 const Shop = () => {
-	const {isLoading, errorMessage, products} = useSelector(
-		(storeState) => storeState.products
-	);
-	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(fetchProducts());
-	}, []);
+	const {
+		isLoading,
+		isFetching,
+		isError,
+		error,
+		data: products,
+	} = useGetAllProductsQuery();
+
+	if(isFetching){
+		return <h2>Data is loading</h2>
+	}
+	if(isError){
+		return <p>{error.message}</p>
+	}
 	return (
 		<div>
 			{/* banner section */}

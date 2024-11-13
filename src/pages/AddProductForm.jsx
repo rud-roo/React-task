@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createProduct } from "../store/reducer/product";
+import { useCreateProductsMutation } from "../store/features/apiSlice";
 
 
 const AddProduct = () => {
@@ -11,7 +10,7 @@ const AddProduct = () => {
     image: "",
   })
 
-  const dispatch = useDispatch();
+	const [addProduct] = useCreateProductsMutation()
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -20,7 +19,7 @@ const AddProduct = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createProduct(product))
+    addProduct(product)
   }
 
 	return (
