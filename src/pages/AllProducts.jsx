@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useGetAllProductsQuery } from "../store/features/apiSlice";
+import { useGetAllProductsQuery } from "../store/features/products/productApi";
 import ProductList from "../components/ProductList";
 
 const AllProducts = () => {
