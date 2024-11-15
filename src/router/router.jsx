@@ -10,6 +10,7 @@ import UserList from "../pages/UserList";
 import CounterApp from "../pages/CounterApp";
 import AddProduct from "../pages/AddProductForm";
 import AllProducts from "../pages/AllProducts";
+import NoteList from "../pages/NoteList";
 
 
 export const rootRouter = createBrowserRouter([
@@ -26,6 +27,7 @@ export const rootRouter = createBrowserRouter([
       {path: "/counter-app", element: <CounterApp/>},
       {path: "/add-product", element: <AddProduct />},
       {path: "/all-product", element: <AllProducts />},
+      {path: "/note-list", element: <NoteList />},
     ]
   }
     

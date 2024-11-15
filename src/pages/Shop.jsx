@@ -1,4 +1,4 @@
-import { useGetAllProductsQuery } from "../store/features/apiSlice";
+import { useGetAllProductsQuery } from "../store/features/products/productApi";
 import ProductCard from "../components/ProductCard"
 
 const Shop = () => {

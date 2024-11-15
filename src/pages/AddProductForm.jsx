@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCreateProductsMutation } from "../store/features/apiSlice";
+import { useCreateProductMutation } from "../store/features/products/productApi";
 
 
 const AddProduct = () => {
@@ -10,7 +10,7 @@ const AddProduct = () => {
     image: "",
   })
 
-	const [addProduct] = useCreateProductsMutation()
+	const [addProduct] = useCreateProductMutation()
 
   const handleChange = (e) => {
     console.log(e.target.value);
