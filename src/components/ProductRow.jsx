@@ -1,12 +1,9 @@
-/* eslint-disable react/prop-types */
-import { useRemoveProductMutation } from "../store/features/products/productApi";
-import { useDispatch } from "react-redux";
-import { removeProduct } from "../store/reducer/product";
+import { useRemoveProduct } from "../hooks/server-states/products";
 
 function ProductRow({ item }) {
-	const [deleteProduct] = useRemoveProductMutation();
+	const removeMutation  = useRemoveProduct();
 	const removeHandler = () => {
-		deleteProduct(item.id)
+		removeMutation.mutate(item.id);
 	}
 
 	return (

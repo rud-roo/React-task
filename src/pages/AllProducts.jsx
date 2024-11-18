@@ -1,9 +1,8 @@
-import { useSelector } from "react-redux";
-import { useGetAllProductsQuery } from "../store/features/products/productApi";
+import { useGetAllProducts } from "../hooks/server-states/products";
 import ProductList from "../components/ProductList";
 
 const AllProducts = () => {
-	const { data: products } = useGetAllProductsQuery();
+	const { products } = useGetAllProducts();
   
 	return (
 		<main>
