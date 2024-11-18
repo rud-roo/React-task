@@ -1,29 +1,42 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import {
-	useGetAllNotesQuery,
-	useCreateNoteMutation,
-	useRemoveNoteMutation,
-} from "../store/features/notes/noteApi";
+import { 
+	useGetAllNotes,
+	useCreateNote,
+	useRemoveNote,
+	useUpdateNote
+ } from "../hooks/server-states/note";
 
 const NoteList = () => {
 	const [noteTitle, setNoteTitle] = useState("");
-	const { isFetching, isError, error, data: notes } = useGetAllNotesQuery();
-	const [addNote] = useCreateNoteMutation();
-	const [deleteNote] = useRemoveNoteMutation();
+	const { isFetching, isError, error, notes } = useGetAllNotes();
+	const createMutation = useCreateNote();
+	const updateMutation = useUpdateNote();
+	const removeMutation = useRemoveNote();
 
 	const submitHandler = (e) => {
 		e.preventDefault();
 		const newNote = {
 			title: noteTitle,
+			isCompleted: false
 		};
-		addNote(newNote);
+		createMutation.mutate(newNote);
 		setNoteTitle("");
 	};
 
 	const removeHandler = (id) => {
-		deleteNote(id);
+		removeMutation.mutate(id);
 	};
+
+	const updateHandler = (note) => {
+		const {id, ...rest} = note;
+		const updatedNote = {
+			id: id,
+			...rest,
+			isCompleted: !note.isCompleted
+		}
+		updateMutation.mutate(updatedNote)
+	}
 
 	return (
 		<div>
@@ -37,6 +50,11 @@ const NoteList = () => {
 			<ul>
 				{notes?.map((note) => (
 					<li key={note.id}>
+						<input 
+							type="checkbox"
+							checked = {note.isCompleted}
+							onChange={() => updateHandler(note)}
+						/>
 						<span>{note.title}</span>
 						<button onClick={() => removeHandler(note.id)}>
 							Remove Note
