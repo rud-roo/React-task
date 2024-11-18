@@ -24,24 +24,29 @@
   ],
   "notes": [
     {
+      "id": "ba91",
       "title": "note 1",
-      "id": "3"
+      "isCompleted": false
     },
     {
+      "id": "e17d",
+      "title": "note 2",
+      "isCompleted": true
+    },
+    {
+      "id": "a9b5",
       "title": "note 3",
-      "id": "4"
+      "isCompleted": true
     },
     {
-      "title": "new note",
-      "id": "5"
+      "id": "1812",
+      "title": "note 4",
+      "isCompleted": true
     },
     {
-      "id": "0e5f",
-      "title": "ntote 4"
-    },
-    {
-      "id": "ec0a",
-      "title": "note 5"
+      "id": "6e81",
+      "title": "note 5",
+      "isCompleted": false
     }
   ]
 }
