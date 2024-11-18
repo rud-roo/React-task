@@ -1,14 +1,13 @@
-import { useGetAllProductsQuery } from "../store/features/products/productApi";
 import ProductCard from "../components/ProductCard"
+import { useGetAllProducts } from "../hooks/server-states/products";
 
 const Shop = () => {
 	const {
-		isLoading,
 		isFetching,
 		isError,
 		error,
-		data: products,
-	} = useGetAllProductsQuery();
+		products,
+	} = useGetAllProducts();
 
 	if(isFetching){
 		return <h2>Data is loading</h2>

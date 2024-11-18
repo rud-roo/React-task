@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCreateProductMutation } from "../store/features/products/productApi";
+import { useCreateProduct } from "../hooks/server-states/products";
 
 
 const AddProduct = () => {
@@ -10,7 +10,7 @@ const AddProduct = () => {
     image: "",
   })
 
-	const [addProduct] = useCreateProductMutation()
+	const createMutation = useCreateProduct();
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -19,7 +19,13 @@ const AddProduct = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    addProduct(product)
+    createMutation.mutate(product)
+		setProduct({
+			title: "",
+			description: "",
+			price: "",
+			image: "",
+		})
   }
 
 	return (
